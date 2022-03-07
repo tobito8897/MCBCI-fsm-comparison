@@ -1,10 +1,11 @@
 #!/usr/bin/python3.7
-
+import pyrem
 import numpy as np
 import pandas as pd
 import scipy.signal
 import scipy.stats as stats
-from nolds import sampen
+from pyeeg.entropy import samp_entropy
+from pyeeg.hjorth_mobility_complexity import hjorth
 
 
 class Events2Label():
@@ -124,18 +125,13 @@ def zerocrossing(data: np.array) -> int:
 
 
 def sampleentropy(data: np.array) -> int:
-    entropy = sampen(data, emb_dim=2)
+    entropy = samp_entropy(data, 2, 0.2*np.std(data))
     return entropy
 
 
 def range_val(data: np.array) -> int:
     _range = np.max(data) - np.min(data)
     return _range
-
-
-def min_val(data: np.array) -> int:
-    _min_value = np.min(data)
-    return _min_value
 
 
 def mean(data: np.array) -> int:
@@ -146,6 +142,26 @@ def mean(data: np.array) -> int:
 def sdeviation(data: np.array) -> int:
     _sdeviation = np.std(data)
     return _sdeviation
+
+
+def hjorth_params(data: np.array) -> int:
+    complexity, mobility = hjorth(data)
+    return complexity, mobility
+
+
+def interquartile_range(data: np.array) -> int:
+    Q1 = np.percentile(data, 25, interpolation="midpoint")
+    Q3 = np.percentile(data, 75, interpolation="midpoint")
+    return Q3 - Q1
+
+
+def absolute_median_deviation(data: np.array) -> int:
+    amd = stats.median_absolute_deviation(data)
+    return amd
+
+
+def min_val(data: np.array) -> int:
+    return np.min(data)
 
 
 def jaccard_similarity(set_1: set, set_2: set) -> set:

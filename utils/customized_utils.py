@@ -9,7 +9,9 @@ from .signal_processors import Events2Label, filter_butterworth, filter_notch,\
                                peak_frequency, median_frequency,\
                                variance, rms, skewness, kurtosis,\
                                zerocrossing, sampleentropy, mean, \
-                               min_val, range_val, sdeviation
+                               range_val, sdeviation, hjorth_params, \
+                               interquartile_range, absolute_median_deviation,\
+                               min_val
 from .basic_plotters import eeg_plot_plus_label, eeg_psd_plot,\
                             get_top_plot, get_feature_elimination_plot,\
                             plot_confusion_matrix, get_rfe_comparison_plot,\
@@ -115,20 +117,17 @@ def calculate_full_features_1(data: np.array, fs: int) -> np.array:
 def calculate_full_features_2(data: np.array, fs: int) -> np.array:
     features = []
     for index in range(data.shape[0]):
-        fxx, psd = scipy.signal.periodogram(data[index],
-                                            fs=fs)
-        peak_freq = peak_frequency(fxx, psd)
-        med_freq = median_frequency(fxx, psd)
+        min_value = min_val(data[index])
+        complexity, mobility = hjorth_params(data[index])
+        iq_range_value = interquartile_range(data[index])
+        am_deviation_value = absolute_median_deviation(data[index])
         sampen_value = sampleentropy(data[index])
         mean_value = mean(data[index])
-        skew_value = skewness(data[index])
-        kurt_value = kurtosis(data[index])
-        min_value = min_val(data[index])
         std_value = sdeviation(data[index])
 
-        features.extend([peak_freq, med_freq, sampen_value,
-                         mean_value, skew_value, kurt_value,
-                         min_value, std_value])
+        features.extend([min_value, complexity, mobility,
+                         iq_range_value, am_deviation_value, sampen_value,
+                         mean_value, std_value])
 
     return features
 

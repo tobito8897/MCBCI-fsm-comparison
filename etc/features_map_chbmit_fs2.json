@@ -4,5 +4,5 @@
               "C4-P4", "P4-O2", "FP2-F8", "F8-T8", "T8-P8",
               "P8-O2", "FZ-CZ", "CZ-PZ", "P7-T7", "T7-FT9",
               "FT9-FT10", "FT10-T8"],
- "features": ["peak_freq", "median_freq", "sample_entr", "mean", "skew", "kurt", "min", "std"]
+ "features": ["min", "complexity", "mobility", "iq_range", "abs_median_deviation", "sampen", "mean", "std"]
 }

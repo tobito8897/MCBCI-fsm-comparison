@@ -7,7 +7,8 @@ chb-mit:
   metadata_file_json: ../etc/metadata_chb-mit.json
   metadata_file_csv: ../etc/metadata_chb-mit.csv
   grid_search: ../../mldata/MLDataChbmit_fs{}/GridSearch/
-  features_map_file: ../etc/feature_map_chbmit_fs{}.json
+  correlation: ../../mldata/MLDataChbmit_fs{}/Correlation/
+  features_map_file: ../etc/features_map_chbmit_fs{}.json
   fs: 256
   num_channels: 23
   length: 512
@@ -24,7 +25,8 @@ siena:
   channels: ../etc/channels_siena.txt
   metadata_file_json: ../etc/metadata_siena.json
   metadata_file_csv: ../etc/metadata_siena.csv
-  features_map_file: ../etc/feature_map_siena_fs{}.json
+  features_map_file: ../etc/features_map_siena_fs{}.json
+  correlation: ../../mldata/MLDataSiena_fs{}/Correlation/
   fs: 512
   num_channels: 18
   length: 1024
