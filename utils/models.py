@@ -1,6 +1,4 @@
 #!/usr/bin/python3.7
-__author__ = "Sergio E Sanchez Hdez"
-
 import os
 from tensorflow.keras.utils import *
 from tensorflow.keras.models import *

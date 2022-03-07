@@ -1,9 +1,6 @@
 #!/usr/bin/python3.7
-__author__ = "Sergio E Sanchez Hdez"
-
 from collections import defaultdict
 import numpy as np
-import pandas as pd
 import scipy.signal
 from textwrap import fill
 import matplotlib.pyplot as plt

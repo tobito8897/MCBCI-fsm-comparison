@@ -1,30 +1,44 @@
 #!/usr/bin/python3.7
 
 # ML Analysis
-from os import terminal_size
-
-
 max_features = 990
 instances_to_explain = 500
 repetitions = 5
 folds = 2
 top_features = [990] + list(range(950, 0, -50)) + [25, 12, 6, 1]
 
-start_kwargs = {"ann": {},
-                "tree": {"min_samples_split": 4,
-                         "random_state": 1},
-                "svm": {"C": 2,
-                        "gamma": "scale",
-                        "kernel": "rbf",
-                        "random_state": 1},
-                "knn": {"metric": "manhattan",
-                        "n_neighbors": 10,
-                        "weights": "uniform"},
-                "forest": {"bootstrap": False,
-                           "min_samples_split": 8,
-                           "n_estimators": 30,
-                           "random_state": 1}
-                }
+start_kwargs_fs1 = {"ann": {},
+                    "tree": {"min_samples_split": 4,
+                             "random_state": 1},
+                    "svm": {"C": 2,
+                            "gamma": "scale",
+                            "kernel": "rbf",
+                            "random_state": 1},
+                    "knn": {"metric": "manhattan",
+                            "n_neighbors": 10,
+                            "weights": "uniform"},
+                    "forest": {"bootstrap": False,
+                               "min_samples_split": 8,
+                               "n_estimators": 30,
+                               "random_state": 1}
+                    }
+
+start_kwargs_fs2 = {"ann": {},
+                    "tree": {"min_samples_split": 4,
+                             "random_state": 1},
+                    "svm": {"C": 2,
+                            "gamma": "scale",
+                            "kernel": "rbf",
+                            "random_state": 1},
+                    "knn": {"metric": "manhattan",
+                            "n_neighbors": 10,
+                            "weights": "uniform"},
+                    "forest": {"bootstrap": False,
+                               "min_samples_split": 8,
+                               "n_estimators": 30,
+                               "random_state": 1}
+                   }
+
 train_kwargs = {"ann": {"steps_per_epoch": 5,
                         "epochs": 200,
                         "shuffle": True,

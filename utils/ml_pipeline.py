@@ -1,6 +1,4 @@
 #!/usr/bin/python3.7
-__author__ = "Sergio E Sanchez Hdez"
-
 import numpy as np
 import tensorflow as tf
 from sklearn.preprocessing import MinMaxScaler
@@ -37,7 +35,7 @@ def grid_search(model_name: int, folds: int, X: np.array,
     model = classifier(0, {})
     clf = GridSearchCV(model, grid_params, cv=folds, verbose=3)
     clf.fit(X, Y)
-    grid_dir = directory + "/GridSearch/" + "/grid_%s.pickle" % (model_name)
+    grid_dir = directory + "/grid_%s.pickle" % (model_name)
     write_pickle(grid_dir, clf.cv_results_)
 
 

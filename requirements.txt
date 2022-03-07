@@ -1,0 +1,13 @@
+docopt
+numpy
+mne
+scipy
+matplotlib
+pandas
+scikit-learn
+tensorflow
+lime
+shap
+requests
+nolds
+PyYAML

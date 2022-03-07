@@ -9,11 +9,10 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.inspection import permutation_importance
-from sklearn.feature_selection import RFECV, SelectFromModel
 from sklearn.preprocessing import MinMaxScaler
 from .models import Classifiers
 from .file_managers import read_pickle
-from .windows import get_index_features_map, random_selection
+from .windows import get_index_features_map
 
 
 def reciprocal_ranking(importances, features_map):

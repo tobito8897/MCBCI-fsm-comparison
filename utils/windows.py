@@ -1,5 +1,4 @@
 #!/usr/bin/python3.7
-__author__ = "Sergio E Sanchez Hdez"
 
 import numpy as np
 
