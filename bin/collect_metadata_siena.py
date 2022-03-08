@@ -22,6 +22,7 @@ from utils.file_managers import write_csv
 
 settings = settings["siena"]
 database_folder = settings["database"]
+metadata_folder = settings["metadata"]
 metadata_file_json = settings["metadata_file_json"]
 metadata_file_csv = settings["metadata_file_csv"]
 full_metadata = defaultdict(dict)
@@ -32,10 +33,13 @@ def main():
     metadata_files, edf_files = [], []
     for path, _, files in os.walk(database_folder):
         for name in files:
-            if "Seizures-list" in name:
-                metadata_files.append(os.path.join(path, name))
             if ".edf" in name:
                 edf_files.append(os.path.join(path, name))
+
+    for path, _, files in os.walk(metadata_folder):
+        for name in files:
+            if "Seizures-list" in name:
+                metadata_files.append(os.path.join(path, name))
 
     for file in metadata_files:
         patient = re.search("(?<=-)PN[0-9]{2}(?=\.)", file).group(0)
