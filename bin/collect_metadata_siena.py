@@ -13,7 +13,7 @@ import mne
 import sys
 import json
 from collections import defaultdict
-sys.path.append("../../Src")
+sys.path.append("../../master_fsm_comparison_research")
 from utils import settings
 from utils.file_parsers import get_sampl_frequency,\
                                get_seizures, unwind_meta_json
