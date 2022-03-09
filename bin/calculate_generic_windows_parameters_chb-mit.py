@@ -43,7 +43,7 @@ base_path = os.path.join(current_dir, settings["database"])
 output_path = os.path.join(current_dir, settings["windows"].format(OPTS["--feature_set"]))
 metadata_file = os.path.join(current_dir, settings["metadata_file_json"])
 channels_file = os.path.join(current_dir, settings["channels"])
-part_for_grid = current_dir, settings["part_for_grid"]
+part_for_grid = settings["part_for_grid"]
 
 
 filt_pipeline = [{"f": 60, "fs": 256, "type": "notch"},                       # Filter 60Hz
