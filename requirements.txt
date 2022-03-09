@@ -11,5 +11,4 @@ shap
 requests
 nolds
 PyYAML
-pyrem
-pyeeg instalacion desde git
+#pyeeg instalacion desde git

@@ -1,0 +1,22 @@
+1- Login into cluster
+2- mkdir python-packages
+3- export PYTHONPATH="${PYTHONPATH}:/lustre/home/ssanchez/python-packages"
+4- Manually install python in path: /lustre/home/ssanchez/python-core_375 (https://www.benhepworth.com/blog/2016/05/18/install-python-to-separate-directory-on-linux-in-5-easy-steps/)
+5- Clone repository
+6- /lustre/home/ssanchez/python-core_375/bin/python3 -m pip install --target=/lustre/home/ssanchez/python-packages/ virtualenv
+7- cd {project-folder}
+8- /lustre/home/ssanchez/python-core_375/bin/python3 -m virtualenv -p /lustre/home/ssanchez/python-core/bin/python3 venv
+9- source venv/bin/activate
+10- /lustre/home/ssanchez/python-core_375/bin/python3 -m pip install --target=/lustre/home/ssanchez/python-packages/ -r requirements.txt
+11- deactivate
+12- srun --partition=gpus -l run_leoatrox_job.sh
+
+###############################################################
+
+cat train_net.sh
+
+#!/bin/bash
+
+source venv/bin/activate
+/lustre/home/ssanchez/python-core_375/bin/python3 ./bin/calculate_generic_windows_parameters_chb-mit.py
+deactivate
