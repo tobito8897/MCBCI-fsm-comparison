@@ -5,7 +5,7 @@
 import os
 import sys
 import logging
-sys.path.append("../../Src")
+sys.path.append("../")
 from utils import settings
 from utils.http import download_file
 

@@ -6,7 +6,7 @@ import sys
 import logging
 from os import listdir
 from os.path import isfile, join
-sys.path.append("../../Src")
+sys.path.append("../")
 from utils import settings
 from utils.http import download_file
 

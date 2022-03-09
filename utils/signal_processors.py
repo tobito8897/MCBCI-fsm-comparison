@@ -1,5 +1,4 @@
 #!/usr/bin/python3.7
-import pyrem
 import numpy as np
 import pandas as pd
 import scipy.signal

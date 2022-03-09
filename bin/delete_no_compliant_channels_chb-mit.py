@@ -6,7 +6,7 @@
 import copy
 import sys
 import logging
-sys.path.append("../../Src")
+sys.path.append("../")
 from utils import settings
 from utils.file_managers import get_json_content, get_text_content, write_json, write_csv
 from utils.file_parsers import unwind_meta_json

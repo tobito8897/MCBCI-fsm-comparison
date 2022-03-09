@@ -14,7 +14,7 @@ import sys
 import logging
 import numpy as np
 from docopt import docopt
-sys.path.append("../../Src")
+sys.path.append("../")
 from utils import settings
 from utils.ml_pipeline import grid_search
 from utils.customized_utils import prepare_data_for_ml

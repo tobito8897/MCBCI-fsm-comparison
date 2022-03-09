@@ -11,7 +11,7 @@ import sys
 import json
 import logging
 from collections import defaultdict
-sys.path.append("../../Src")
+sys.path.append("../")
 from utils import settings
 from utils.file_managers import write_csv
 from utils.file_parsers import get_sampl_frequency, get_channels_and_seizures, unwind_meta_json

@@ -24,7 +24,7 @@ Options:
 import sys
 import logging
 from docopt import docopt
-sys.path.append("../../Src")
+sys.path.append("../")
 from utils import settings
 from utils.signal_processors import Events2Label, select_monopolar_channels,\
                                     scaler

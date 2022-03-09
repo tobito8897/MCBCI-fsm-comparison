@@ -25,7 +25,7 @@ import sys
 import logging
 import numpy as np
 from docopt import docopt
-sys.path.append("../../master_fsm_comparison_research")
+sys.path.append("../")
 from utils import settings
 from utils.signal_processors import Events2Label, convert_to_bipolar, scaler
 from utils.customized_utils import pipeline_filter, bank_filter,\
