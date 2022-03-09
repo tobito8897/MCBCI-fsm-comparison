@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+cd "IIIII"
 SCRIPTPATH=`pwd`
 DATAPATH=`echo /../../Data/SienaRaw`
 cd $SCRIPTPATH$DATAPATH
