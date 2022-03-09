@@ -66,7 +66,7 @@ else:
 for patient, data in meta.items():
     for file, details in list(data["files"].items()):
         if OPTS["--patient"] and OPTS["--patient"] not in file:
-            print(file)
+            continue
         try:
             eeg = get_edf_content("{}/{}/{}".format(base_path,
                                                     file.split("-")[0],
