@@ -20,12 +20,13 @@ Options:
 # 8.- Split 0.1 data for grid search and 0.9 for rest of analysis process
 # 9.- Save data
 # Note: check features_map.json for understanding features order.
-
+import os
 import sys
 import logging
 import numpy as np
 from docopt import docopt
-sys.path.append("../")
+current_dir = os.path.dirname(__file__)
+sys.path.append(os.path.join(current_dir, ".."))
 from utils import settings
 from utils.signal_processors import Events2Label, convert_to_bipolar, scaler
 from utils.customized_utils import pipeline_filter, bank_filter,\
@@ -38,10 +39,10 @@ from utils.windows import get_windowsdata, no_random_selection
 
 OPTS = docopt(__doc__)
 settings = settings["siena"]
-base_path = settings["database"]
-output_path = settings["windows"].format(OPTS["--feature_set"])
-metadata_file = settings["metadata_file_json"]
-channels_file = settings["channels"]
+base_path = os.path.join(current_dir, settings["database"])
+output_path = os.path.join(current_dir, settings["windows"].format(OPTS["--feature_set"]))
+metadata_file = os.path.join(current_dir, settings["metadata_file_json"])
+channels_file = os.path.join(current_dir, settings["channels"])
 
 
 filt_pipeline = [{"f": 50, "fs": 256, "type": "notch"},                       # Filter 60Hz

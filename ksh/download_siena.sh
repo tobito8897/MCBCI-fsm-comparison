@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
-cd "IIIII"
-SCRIPTPATH=`pwd`
+SCRIPTPATH=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 DATAPATH=`echo /../../Data/SienaRaw`
 cd $SCRIPTPATH$DATAPATH
 wget -r -N -c -np https://physionet.org/files/siena-scalp-eeg/1.0.0/

@@ -20,11 +20,12 @@ Options:
 # 8.- Split 0.1 data for grid search and 0.9 for rest of analysis process
 # 9.- Save data
 # Note: check features_map.json for understanding features order.
-
+import os
 import sys
 import logging
 from docopt import docopt
-sys.path.append("../")
+current_dir = os.path.dirname(__file__)
+sys.path.append(os.path.join(current_dir, ".."))
 from utils import settings
 from utils.signal_processors import Events2Label, select_monopolar_channels,\
                                     scaler
@@ -38,11 +39,11 @@ from utils.windows import get_windowsdata, no_random_selection
 
 OPTS = docopt(__doc__)
 settings = settings["chb-mit"]
-base_path = settings["database"]
-output_path = settings["windows"].format(OPTS["--feature_set"])
-metadata_file = settings["metadata_file_json"]
-channels_file = settings["channels"]
-part_for_grid = settings["part_for_grid"]
+base_path = os.path.join(current_dir, settings["database"])
+output_path = os.path.join(current_dir, settings["windows"].format(OPTS["--feature_set"]))
+metadata_file = os.path.join(current_dir, settings["metadata_file_json"])
+channels_file = os.path.join(current_dir, settings["channels"])
+part_for_grid = current_dir, settings["part_for_grid"]
 
 
 filt_pipeline = [{"f": 60, "fs": 256, "type": "notch"},                       # Filter 60Hz

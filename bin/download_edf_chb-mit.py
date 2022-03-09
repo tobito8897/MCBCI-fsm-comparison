@@ -2,17 +2,19 @@
 """
 1.- Download all EDF files form physionet CHB-MIT
 """
+import os
 import sys
 import logging
 from os import listdir
 from os.path import isfile, join
-sys.path.append("../")
+current_dir = os.path.dirname(__file__)
+sys.path.append(os.path.join(current_dir, ".."))
 from utils import settings
 from utils.http import download_file
 
 
-record_seizure_file = settings["chb-mit"]["seizure_records"]
-dst_directory = settings["chb-mit"]["database"]
+record_seizure_file = os.path.join(current_dir, settings["chb-mit"]["seizure_records"])
+dst_directory = os.path.join(current_dir, settings["chb-mit"]["database"])
 chb_url = "https://physionet.org/files/chbmit/1.0.0/"
 
 

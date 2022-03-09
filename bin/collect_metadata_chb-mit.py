@@ -7,20 +7,22 @@
 5.- Read start/end time of each seizure
 6.- Save to metadata.json
 """
+import os
 import sys
 import json
 import logging
 from collections import defaultdict
-sys.path.append("../")
+current_dir = os.path.dirname(__file__)
+sys.path.append(os.path.join(current_dir, ".."))
 from utils import settings
 from utils.file_managers import write_csv
 from utils.file_parsers import get_sampl_frequency, get_channels_and_seizures, unwind_meta_json
 
 
-record_seizure_file = settings["chb-mit"]["seizure_records"]
-metadata_folder = settings["chb-mit"]["metadata"]
-metadata_file_json = settings["chb-mit"]["metadata_file_json"]
-metadata_file_csv = settings["chb-mit"]["metadata_file_csv"]
+record_seizure_file = os.path.join(current_dir, settings["chb-mit"]["seizure_records"])
+metadata_folder = os.path.join(current_dir, settings["chb-mit"]["metadata"])
+metadata_file_json = os.path.join(current_dir, settings["chb-mit"]["metadata_file_json"])
+metadata_file_csv = os.path.join(current_dir, settings["chb-mit"]["metadata_file_csv"])
 meta_file_pattern = metadata_folder + "/{}-summary.txt"
 full_metadata = defaultdict(dict)
 

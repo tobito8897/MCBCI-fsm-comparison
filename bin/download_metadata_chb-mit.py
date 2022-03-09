@@ -5,14 +5,14 @@
 import os
 import sys
 import logging
-sys.path.append("../")
+current_dir = os.path.dirname(__file__)
+sys.path.append(os.path.join(current_dir, ".."))
 from utils import settings
 from utils.http import download_file
 
 
-base_path = os.path.dirname(os.path.realpath(__file__))
-record_seizure_file = settings["chb-mit"]["seizure_records"]
-dst_directory = base_path + "/" + settings["chb-mit"]["metadata"]
+record_seizure_file = os.path.join(current_dir, settings["chb-mit"]["seizure_records"])
+dst_directory = os.path.join(current_dir, settings["chb-mit"]["metadata"])
 chb_url = "https://physionet.org/files/chbmit/1.0.0/"
 
 

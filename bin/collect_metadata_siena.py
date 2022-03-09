@@ -13,7 +13,8 @@ import mne
 import sys
 import json
 from collections import defaultdict
-sys.path.append("../")
+current_dir = os.path.dirname(__file__)
+sys.path.append(os.path.join(current_dir, ".."))
 from utils import settings
 from utils.file_parsers import get_sampl_frequency,\
                                get_seizures, unwind_meta_json
@@ -21,10 +22,10 @@ from utils.file_managers import write_csv
 
 
 settings = settings["siena"]
-database_folder = settings["database"]
-metadata_folder = settings["metadata"]
-metadata_file_json = settings["metadata_file_json"]
-metadata_file_csv = settings["metadata_file_csv"]
+database_folder = os.path.join(current_dir, settings["database"])
+metadata_folder = os.path.join(current_dir, settings["metadata"])
+metadata_file_json = os.path.join(current_dir, settings["metadata_file_json"])
+metadata_file_csv = os.path.join(current_dir, settings["metadata_file_csv"])
 full_metadata = defaultdict(dict)
 
 

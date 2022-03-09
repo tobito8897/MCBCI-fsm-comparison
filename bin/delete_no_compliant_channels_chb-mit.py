@@ -3,18 +3,21 @@
 1.- Get a list of files not having channels required by channels.txt
 2.- Delete that list from metadata.json
 """
+import os
 import copy
 import sys
 import logging
-sys.path.append("../")
+current_dir = os.path.dirname(__file__)
+sys.path.append(os.path.join(current_dir, ".."))
 from utils import settings
 from utils.file_managers import get_json_content, get_text_content, write_json, write_csv
 from utils.file_parsers import unwind_meta_json
 
 
-metadata_file = settings["chb-mit"]["metadata_file_json"]
-channels_file = settings["chb-mit"]["channels"]
-metadata_file_csv = settings["chb-mit"]["metadata_file_csv"]
+settings = settings["chb-mit"]
+metadata_file = os.path.join(current_dir, settings["metadata_file_json"])
+channels_file = os.path.join(current_dir, settings["channels"])
+metadata_file_csv = os.path.join(current_dir, settings["metadata_file_csv"])
 
 
 meta = get_json_content(metadata_file)
