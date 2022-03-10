@@ -21,3 +21,12 @@ mkdir -p "processeddata/ProcessedDataChbMit_fs2/GridSearch/NoIctal"
 
 mkdir -p "processeddata/ProcessedDataSiena_fs1/Common/Ictal"
 mkdir -p "processeddata/ProcessedDataSiena_fs2/Common/NoIctal"
+
+mkdir -p "mldata/MLDataChbmit_fs1/Correlation"
+mkdir -p "mldata/MLDataChbmit_fs2/Correlation"
+
+mkdir -p "mldata/MLDataSiena_fs1/Correlation"
+mkdir -p "mldata/MLDataSiena_fs2/Correlation"
+
+mkdir -p "mldata/MLDataChbmit_fs1/GridSearch"
+mkdir -p "mldata/MLDataChbmit_fs2/GridSearch"
