@@ -14,12 +14,12 @@ start_kwargs_fs1 = {"ann": {},
                             "gamma": "scale",
                             "kernel": "rbf",
                             "random_state": 1},
-                    "knn": {"metric": "euclidean",
-                            "n_neighbors": 10,
-                            "weights": "distance"},
-                    "forest": {"bootstrap": True,
+                    "knn": {"metric": "manhattan",
+                            "n_neighbors": 15,
+                            "weights": "uniform"},
+                    "forest": {"bootstrap": False,
                                "min_samples_split": 4,
-                               "n_estimators": 100,
+                               "n_estimators": 150,
                                "random_state": 1}
                     }
 

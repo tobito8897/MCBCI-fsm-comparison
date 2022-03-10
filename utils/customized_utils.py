@@ -153,7 +153,8 @@ def retrieve_index_from_pickles(file_names: list, indices: list):
 
 
 def prepare_data_for_ml(ictal_directory: str,
-                        noictal_directory: str) -> tuple:
+                        noictal_directory: str,
+                        remove_indexes: list = []) -> tuple:
     ictal_files = list_dir(ictal_directory)
     noictal_files = list_dir(noictal_directory)
 
@@ -164,6 +165,7 @@ def prepare_data_for_ml(ictal_directory: str,
     noictal_data = list_of_list_to_array(noictal_data)
 
     data = np.concatenate((ictal_data, noictal_data))
+    data = np.delete(data, remove_indexes, axis=1)
     labels = generate_labels(len(ictal_data), len(noictal_data))
 
     return data, labels
