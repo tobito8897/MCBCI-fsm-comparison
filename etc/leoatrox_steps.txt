@@ -9,7 +9,7 @@
 9- source venv/bin/activate
 10- /lustre/home/ssanchez/python-core_375/bin/python3 -m pip install --target=/lustre/home/ssanchez/python-packages/ -r requirements.txt
 11- deactivate
-12- srun --partition=gpus -l run_leoatrox_job.sh
+12- srun --partition=gpu -l run_leoatrox_job.sh
 
 ###############################################################
 
