@@ -30,3 +30,15 @@ mkdir -p "mldata/MLDataSiena_fs2/Correlation"
 
 mkdir -p "mldata/MLDataChbmit_fs1/GridSearch"
 mkdir -p "mldata/MLDataChbmit_fs2/GridSearch"
+
+mkdir -p "mldata/MLDataChbmit_fs1/TopFeatures"
+mkdir -p "mldata/MLDataChbmit_fs2/TopFeatures"
+
+mkdir -p "mldata/MLDataSiena_fs1/TopFeatures"
+mkdir -p "mldata/MLDataSiena_fs2/TopFeatures"
+
+mkdir -p "mldata/MLDataChbmit_fs1/Stats"
+mkdir -p "mldata/MLDataChbmit_fs2/Stats"
+
+mkdir -p "mldata/MLDataSiena_fs1/Stats"
+mkdir -p "mldata/MLDataSiena_fs2/Stats"

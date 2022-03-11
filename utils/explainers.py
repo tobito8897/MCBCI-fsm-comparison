@@ -116,7 +116,7 @@ class FeaturesImportance():
             return np.abs(PI.importances_mean)
         
         elif explainer == "reciprocalranking":
-            directory = self.top_directory + f"/TopFeatures/top_{model_name}_*.pickle"
+            directory = self.top_directory + f"/top_{model_name}_*.pickle"
             files = glob(directory)
             importances = []
 

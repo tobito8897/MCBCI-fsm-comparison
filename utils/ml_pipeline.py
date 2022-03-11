@@ -85,9 +85,9 @@ def k_folds_stratified_nn(model_name: int, repetitions: int,
             tf.keras.backend.clear_session()
             del model
 
-    stats_dir = directory + "/Stats/" + "/stats_%s_%s_%s.pickle" % (model_name,
-                                                                    explainer,
-                                                                    top)
+    stats_dir = directory + "/stats_%s_%s_%s.pickle" % (model_name,
+                                                        explainer,
+                                                        top)
     stats_data = {"real": y_real,
                   "predicted": y_predicted}
     write_pickle(stats_dir, stats_data)

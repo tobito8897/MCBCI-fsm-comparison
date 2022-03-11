@@ -11,8 +11,8 @@ Options:
 #     features
 # 3.- Calculate the mean correlation of every feature against the rest
 #     of features
-# 4.- Keep combination having correlation over 0.95. 
-#     Of the pair of features, the one having the 
+# 4.- Keep combination having correlation over 0.95
+#     Of the pair of features, the one having the
 #     largest mean correlation will be removed
 # 4.- Save the results
 import os

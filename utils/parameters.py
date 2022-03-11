@@ -5,7 +5,6 @@ max_features = 990
 instances_to_explain = 500
 repetitions = 5
 folds = 2
-top_features = [990] + list(range(950, 0, -50)) + [25, 12, 6, 1]
 
 start_kwargs_fs1 = {"ann": {},
                     "tree": {"min_samples_split": 8,
