@@ -8,6 +8,8 @@ chb-mit:
   metadata_file_csv: ../etc/metadata_chb-mit.csv
   grid_search: ../../mldata/MLDataChbmit_fs{}/GridSearch/
   correlation: ../../mldata/MLDataChbmit_fs{}/Correlation/corr_coefs.pickle
+  top: ../../mldata/MLDataChbmit_fs{}/TopFeatures/
+  stats: ../../mldata/MLDataChbmit_fs{}/Stats/
   features_map_file: ../etc/features_map_chbmit_fs{}.json
   fs: 256
   num_channels: 23
@@ -77,6 +79,8 @@ siena:
   metadata_file_csv: ../etc/metadata_siena.csv
   features_map_file: ../etc/features_map_siena_fs{}.json
   correlation: ../../mldata/MLDataSiena_fs{}/Correlation/corr_coefs.pickle
+  top: ../../mldata/MLDataChbmit_fs{}/TopFeatures/
+  stats: ../../mldata/MLDataChbmit_fs{}/Stats/
   fs: 512
   num_channels: 18
   length: 1024
