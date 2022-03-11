@@ -79,8 +79,8 @@ siena:
   metadata_file_csv: ../etc/metadata_siena.csv
   features_map_file: ../etc/features_map_siena_fs{}.json
   correlation: ../../mldata/MLDataSiena_fs{}/Correlation/corr_coefs.pickle
-  top: ../../mldata/MLDataChbmit_fs{}/TopFeatures/
-  stats: ../../mldata/MLDataChbmit_fs{}/Stats/
+  top: ../../mldata/MLDataSiena_fs{}/TopFeatures/
+  stats: ../../mldata/MLDataSiena_fs{}/Stats/
   fs: 512
   num_channels: 18
   length: 1024
