@@ -109,7 +109,7 @@ def eeg_psd_plot(data: np.array, channels: list, channel_names: list = None,
 
 
 def plot_confusion_matrix(y_true: np.array, y_pred: np.array, classes: list,
-                          _id: str, normalize: bool = False,
+                          _id: str, normalize: bool = True,
                           cmap=plt.cm.YlOrRd, save: str = None):
     """
     Plot confusion matrix
@@ -124,7 +124,7 @@ def plot_confusion_matrix(y_true: np.array, y_pred: np.array, classes: list,
 
     fig, ax = plt.subplots(figsize=(6, 6))
     im = ax.imshow(cm, interpolation="nearest", cmap=cmap,
-                   vmin=0, vmax=4000)
+                   vmin=0, vmax=1)
     ax.figure.colorbar(im, ax=ax, label="Number of instances")
     # We want to show all ticks...
     ax.set(xticks=np.arange(cm.shape[1]),

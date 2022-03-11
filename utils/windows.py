@@ -71,14 +71,20 @@ def list_of_list_to_array(data: list) -> np.array:
 
 
 def get_index_features_map(features_map: dict, importances: list,
-                           features_to_keep: int, invert: bool = False) -> list:
+                           features_to_keep: int, invert: bool = False,
+                           blacklist: list = []) -> list:
     index_map = {}
-    counter = 0
+    real_counter, counter = 0, 0
     for band in features_map["bands"]:
         for channel in features_map["channels"]:
             for feature in features_map["features"]:
+                if real_counter in blacklist:
+                    real_counter += 1
+                    continue
                 index_map[counter] = "{}_{}_{}".format(band, channel, feature)
                 counter += 1
+                real_counter += 1
+
     importances = ((a, index_map[a], b) for a, b in enumerate(importances))
 
     if invert:

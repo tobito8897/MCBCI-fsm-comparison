@@ -63,9 +63,11 @@ else:
 for explainer in explainers:
     top_filename = top_directory + "/top_%s_%s.pickle" % (model, explainer)
     FImp = FeaturesImportance(data, labels, 200,
-                              top_directory, features_map)
+                              top_directory, features_map,
+                              settings["blacklisted_features"][OPTS["--feature_set"]])
     importances = FImp(explainer, model, max_features, start_kwargs[model],
                        train_kwargs[model])
+
     write_pickle(top_filename, importances)
 
     importances = read_pickle(top_filename)
@@ -73,6 +75,7 @@ for explainer in explainers:
         k_folds_stratified_nn(model, repetitions, data, labels,
                               stats_directory, features_map, top,
                               explainer, importances, start_kwargs[model],
-                              train_kwargs[model])
+                              train_kwargs[model],
+                              settings["blacklisted_features"][OPTS["--feature_set"]])
         logging.info("Iteration completed, explainer%s=, number of features=%s",
                      explainer, top)

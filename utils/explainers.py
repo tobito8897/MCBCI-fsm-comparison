@@ -15,13 +15,14 @@ from .file_managers import read_pickle
 from .windows import get_index_features_map
 
 
-def reciprocal_ranking(importances, features_map):
+def reciprocal_ranking(importances, features_map, blacklist):
     rankings = []
     for imp in importances:
         ranking, names, _ = get_index_features_map(features_map,
                                                    imp,
                                                    None,
-                                                   invert=True)
+                                                   invert=True,
+                                                   blacklist=blacklist)
         rankings.append(ranking)
 
     rec_ranking = []
@@ -44,7 +45,7 @@ def reciprocal_ranking(importances, features_map):
 class FeaturesImportance():
 
     def __init__(self, X: np.array, Y: np.array, num_instances: int,
-                 top_directory: str, features_map: dict):
+                 top_directory: str, features_map: dict, blacklist: list):
         np.random.seed(1)
        
         scaler = MinMaxScaler()
@@ -61,6 +62,7 @@ class FeaturesImportance():
         self.top_directory = top_directory
         self.features_map = features_map
         self.instances = num_instances
+        self.blacklist = blacklist
 
     def __call__(self, explainer: str, model_name: str, num_features: str,
                  start_kwargs: dict, train_kwargs: dict):
@@ -124,7 +126,8 @@ class FeaturesImportance():
                 if "reciprocalranking" not in file:
                     importances.append(read_pickle(file))
 
-            ranking, _, _ = reciprocal_ranking(importances, self.features_map)
+            ranking, _, _ = reciprocal_ranking(importances, self.features_map,
+                                               self.blacklist)
             return ranking
 
         else:

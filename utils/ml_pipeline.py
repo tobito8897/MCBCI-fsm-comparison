@@ -43,7 +43,7 @@ def k_folds_stratified_nn(model_name: int, repetitions: int,
                           X: np.array, Y: np.array, directory: str,
                           features_map: dict, top: str, explainer: str,
                           importances: list, start_kwargs: dict,
-                          train_kwargs: dict):
+                          train_kwargs: dict, blacklist: list):
     np.random.seed(1)
     tf.random.set_seed(1)
     rng = np.random.RandomState(1)
@@ -58,7 +58,8 @@ def k_folds_stratified_nn(model_name: int, repetitions: int,
     classifier = Classifiers(model_name)
     indices, _, _ = get_index_features_map(features_map,
                                            importances,
-                                           top, invert=invert)
+                                           top, invert=invert,
+                                           blacklist=blacklist)
 
     for _ in range(repetitions):
         randint = rng.randint(low=0, high=32767)
