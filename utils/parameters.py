@@ -23,18 +23,18 @@ start_kwargs_fs1 = {"ann": {},
                     }
 
 start_kwargs_fs2 = {"ann": {},
-                    "tree": {"min_samples_split": 4,
+                    "tree": {"min_samples_split": 2,
                              "random_state": 1},
                     "svm": {"C": 2,
                             "gamma": "scale",
                             "kernel": "rbf",
                             "random_state": 1},
-                    "knn": {"metric": "manhattan",
+                    "knn": {"metric": "euclidean",
                             "n_neighbors": 10,
-                            "weights": "uniform"},
-                    "forest": {"bootstrap": False,
-                               "min_samples_split": 8,
-                               "n_estimators": 30,
+                            "weights": "distance"},
+                    "forest": {"bootstrap": True,
+                               "min_samples_split": 4,
+                               "n_estimators": 150,
                                "random_state": 1}
                    }
 
