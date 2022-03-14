@@ -8,10 +8,6 @@ Options:
     --db=<db>             siena or chb-mit
     --model=<ex>          tree, svm, knn, forest or ann
 """
-# 1.- Read EDF processed files
-# 2.- Read the list of parameters to test from configuration file
-# 3.- Test each parameter combination by using Cross Validation
-# 4.- Save the results
 import os
 import sys
 import logging
@@ -65,7 +61,7 @@ for explainer in explainers:
     FImp = FeaturesImportance(data, labels, 200,
                               top_directory, features_map,
                               settings["blacklisted_features"][OPTS["--feature_set"]])
-    importances = FImp(explainer, model, max_features, start_kwargs[model],
+    importances = FImp(explainer, model, top_features[0], start_kwargs[model],
                        train_kwargs[model])
 
     write_pickle(top_filename, importances)

@@ -8,7 +8,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
-# Necesario para usar Theano como backend      
+# Necesario para usar Theano como backend
 os.environ["MKL_THREADING_LAYER"] = "GNU"
 
 
@@ -25,7 +25,7 @@ def Net(input_dim: int) -> Model:
                   metrics=["accuracy"])
     model.summary()
 
-    plot_model(model, to_file="../Images/ANNModel.png", show_shapes=True,
+    plot_model(model, to_file="../../Images/ANNModel.png", show_shapes=True,
                show_layer_names=True, dpi=300)
     return model
 
