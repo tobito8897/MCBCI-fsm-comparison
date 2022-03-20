@@ -5,7 +5,7 @@ import scipy.signal
 from textwrap import fill
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
-from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.metrics import accuracy_score, confusion_matrix, f1_score
 from .parameters import methods_color
 from .signal_processors import jaccard_similarity
 
@@ -157,11 +157,11 @@ def plot_confusion_matrix(y_true: np.array, y_pred: np.array, classes: list,
     plt.show()
 
 
-def get_top_plot(columns: list, values: list, title: str, save: str = None):
+def get_top_plot(columns: list, values: list, save: str = None):
     """
     Plot most important features using bar plot
     """
-    fig, ax = plt.subplots(figsize=(16, 9))
+    _, ax = plt.subplots(figsize=(16, 9))
     ax.barh(columns, values)
     ax.grid(b=True, color="grey", linestyle="-.", linewidth=0.5,
             alpha=0.3)
@@ -181,41 +181,45 @@ def get_feature_elimination_plot(used_features: list, y_real_list: list,
     """
     Plot accuracy for different number of used features
     """
-    acc, sen, spec = [], [], []
+    f1s, sen, spec = [], [], []
 
     for y_real, y_pred in zip(y_real_list, y_predicted_list):
-        local_acc, local_sen, local_spec = [], [], []
+        local_f1, local_sen, local_spec = [], [], []
         for rep_real, rep_pred in zip(y_real, y_pred):
-            local_acc.append(accuracy_score(rep_real, rep_pred))
             cm = confusion_matrix(rep_real, rep_pred)
             local_sen.append(float(cm[0][0]/np.sum(cm[0])))
             local_spec.append(float(cm[1][1]/np.sum(cm[1])))
+            rep_real = np.where((rep_real == 0) | (rep_real == 1), 1-rep_real,
+                                rep_real)
+            rep_pred = np.where((rep_pred == 0) | (rep_pred == 1), 1-rep_pred,
+                                rep_pred)
+            local_f1.append(f1_score(rep_real, rep_pred))
 
-        acc.append([np.mean(local_acc), np.std(local_acc)])
+        f1s.append([np.mean(local_f1), np.std(local_f1)])
         sen.append([np.mean(local_sen), np.std(local_sen)])
         spec.append([np.mean(local_spec), np.std(local_spec)])
 
-    used_features, acc, sen, spec = zip(*sorted(zip(used_features, acc,
+    used_features, f1s, sen, spec = zip(*sorted(zip(used_features, f1s,
                                                     sen, spec),
                                                 reverse=True))
 
     _ = plt.figure(figsize=(12, 7))
     _, (ax0, ax1) = plt.subplots(nrows=1, ncols=2, figsize=(12, 5))
 
-    ax0.plot(used_features, [x[0] for x in acc], "r")
+    ax0.plot(used_features, [x[0] for x in f1s], "r")
     ax0.invert_xaxis()
     ax0.set_ylim([0, 1])
     ax0.set_title(title, fontsize=15)
-    ax0.set_ylabel("Accuracy", fontsize=14)
+    ax0.set_ylabel("F1-Score", fontsize=14)
     ax0.set_xlabel("Number of features", fontsize=14)
     ax0.grid(True)
 
-    norm = plt.Normalize(0.2, 0.9)
-    color_acc = plt.cm.hot(norm([x[0] for x in acc]))
+    norm = plt.Normalize(-0.3, 0.9)
+    color_f1s = plt.cm.hot(norm([x[0] for x in f1s]))
     color_sen = plt.cm.hot(norm([x[0] for x in sen]))
     color_spec = plt.cm.hot(norm([x[0] for x in spec]))
-    colors = [(x, y, z) for x, y, z in zip(color_acc, color_sen, color_spec)]
-    acc = [(int(a[0]*1000)/1000, int(a[1]*1000)/1000) for a in acc]
+    colors = [(x, y, z) for x, y, z in zip(color_f1s, color_sen, color_spec)]
+    f1s = [(int(a[0]*1000)/1000, int(a[1]*1000)/1000) for a in f1s]
     sen = [(int(a[0]*1000)/1000, int(a[1]*1000)/1000) for a in sen]
     spec = [(int(a[0]*1000)/1000, int(a[1]*1000)/1000) for a in spec]
 
@@ -223,9 +227,9 @@ def get_feature_elimination_plot(used_features: list, y_real_list: list,
     cell_text = [["{} +/- {}".format(x[0], x[1]),
                   "{} +/- {}".format(y[0], y[1]),
                   "{} +/- {}".format(z[0], z[1])]
-                  for x, y, z in zip(acc, sen, spec)]
+                 for x, y, z in zip(f1s, sen, spec)]
     table = ax1.table(cellText=cell_text,
-                      colLabels=["Accuracy", "Sensivity", "Specificity"],
+                      colLabels=["F1-Score", "Sensivity", "Specificity"],
                       rowLabels=used_features,
                       loc="center", cellColours=colors)
     table.set_fontsize(10)
@@ -253,20 +257,23 @@ def get_rfe_comparison_plot(data: list, save: str = None):
         axes.append(ax)
 
         for explainer in _data:
-            accuracies = [accuracy_score(real, pred)
-                          for real, pred in zip(explainer["real"],
-                                                explainer["predicted"])]
-            used_features, accuracies = zip(*sorted(zip(explainer["used_features"],
-                                                        accuracies),
-                                                    reverse=True))
+            f1_scores = []
+            for real, pred in zip(explainer["real"], explainer["predicted"]):
+                real = np.where((real == 0) | (real == 1), 1-real,
+                                real)
+                pred = np.where((pred == 0) | (pred == 1), 1-pred, pred)
+                f1_scores.append(f1_score(real, pred))
+            used_features, f1_scores = zip(*sorted(zip(explainer["used_features"],
+                                                       f1_scores),
+                                                   reverse=True))
 
-            line = ax.plot(used_features, accuracies,
+            line = ax.plot(used_features, f1_scores,
                            color=methods_color[explainer["explainer"]],
                            label=explainer["explainer"], linewidth=1)
         ax.invert_xaxis()
         ax.grid(b=True, color="grey", linestyle="-.", linewidth=0.5,
                 alpha=0.3)
-        ax.set_ylim([0.65, 0.95])
+        ax.set_ylim([0.50, 0.90])
         ax.tick_params(axis="x", labelsize=5)
         ax.tick_params(axis="y", labelsize=5)
 
@@ -284,13 +291,14 @@ def get_rfe_comparison_plot(data: list, save: str = None):
                         title=fill("Feature selection methods", 20))
     legend.get_frame().set_edgecolor("k")
     plt.setp(legend.get_title(), fontsize=6)
-
+    print(explainer["used_features"])
     for ax, letter in zip(axes, letters):
-        ax.text(550, 0.59, letter, fontsize=7, fontname="Times New Roman")
-        ax.set_ylim([0.65, 0.95])
-        ax.set_xlim([990, 0])
+        ax.text(int(explainer["used_features"][-1]/2), 0.36, letter,
+                fontsize=7, fontname="Times New Roman")
+        ax.set_ylim([0.45, 0.90])
+        ax.set_xlim(explainer["used_features"][-1], 0)
     fig.text(0.43, 0.015, "Number of features", fontsize=7)
-    fig.text(0.05, 0.5, "Accuracy", rotation=90, va='center', fontsize=7)
+    fig.text(0.05, 0.5, "F1-Score", rotation=90, va='center', fontsize=7)
 
     if save:
         plt.savefig(save, dpi=300, bbox_inches="tight", pad_inches=0.2,
@@ -330,8 +338,13 @@ def get_scatter_plot_acc(label_slices: dict, models: list, explainers: list,
                 for label in labels:
                     if m in label["name"][0] and e in label["name"][1]:
                         x.append(count)
-                        y.append(accuracy_score(np.concatenate(label["real"]),
-                                                np.concatenate(label["predicted"])))
+                        real = np.concatenate(label["real"])
+                        pred = np.concatenate(label["predicted"])
+                        real = np.where((real == 0) | (real == 1), 1-real,
+                                        real)
+                        pred = np.where((pred == 0) | (pred == 1), 1-pred,
+                                        pred)
+                        y.append(f1_score(real, pred))
                         count += 1
                 if y:
                     y_min_lim = min(y) if min(y) < y_min_lim else y_min_lim
@@ -360,15 +373,15 @@ def get_scatter_plot_acc(label_slices: dict, models: list, explainers: list,
     legend.get_frame().set_edgecolor("k")
 
     for ax, letter in zip(axes, letters):
-        ax.text(len(models)*len(explainers)*0.5, 0.54, letter, fontsize=8,
-                fontname="Times New Roman")
+        ax.text(len(models)*len(explainers)*0.5, y_min_lim*0.50, letter,
+                fontsize=8, fontname="Times New Roman")
         ax.set_ylim([y_min_lim*0.95, y_max_lim*1.05])
         ax.set_xlim([-1, count+1])
         for ytick in ax.get_yticks():
             ax.hlines(ytick, -1, 0, linewidth=0.7, colors=["k"])
 
 
-    fig.text(0.05, 0.5, "Accuracy", rotation=90, va="center", fontsize=8)
+    fig.text(0.05, 0.5, "F1-Score", rotation=90, va="center", fontsize=8)
 
     if save:
         plt.savefig(save, dpi=300, bbox_inches="tight", pad_inches=0.2,

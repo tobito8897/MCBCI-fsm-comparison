@@ -23,7 +23,7 @@ from .file_managers import list_dir, read_pickles, read_pickle
 from .ml_pipeline import generate_labels
 from .stats import test_5x2_ftest
 from .parameters import methods_short_name
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import f1_score
 
 
 def fast_eeg_plot_plus_label(file_name: str, period: tuple,
@@ -175,7 +175,7 @@ def get_representative_slices(directory: str, classifiers: list,
                               explainers: list, start: int, end: int,
                               num_slices: int):
     """
-    Get slices having a representative change in the accuracy mean value,
+    Get slices having a representative change in the f1-score mean value,
     accuracy of using 1 single feature is not considered
     """
     directory = directory + "/Stats/"
@@ -184,7 +184,7 @@ def get_representative_slices(directory: str, classifiers: list,
 
     for classifier in classifiers:
         for explainer in explainers:
-            local_accuracies = []
+            local_f1_scores = []
             _filenames = [f for f in filenames
                           if classifier + "_" + explainer in f]
             num_features = [int(f.split("/")[-1].split(".")[0].split("_")[3])
@@ -192,27 +192,32 @@ def get_representative_slices(directory: str, classifiers: list,
 
             for file in _filenames:
                 predictions = read_pickle(file)
-                acc = accuracy_score(np.concatenate(predictions["real"]),
-                                     np.around(np.concatenate(predictions["predicted"])))
-                local_accuracies.append(acc)
+                real = np.concatenate(predictions["real"])
+                pred = np.around(np.concatenate(predictions["predicted"]))
+                real = np.where((real == 0) | (real == 1), 1-real,
+                                real)
+                pred = np.where((pred == 0) | (pred == 1), 1-pred,
+                                pred)
+                f1s = f1_score(real, pred)
+                local_f1_scores.append(f1s)
 
-            num_features, local_accuracies = zip(*sorted(zip(num_features,
-                                                             local_accuracies),
-                                                 reverse=True))
-            crop_num_features, crop_local_accuracies = [], []
-            for x, y in zip(num_features, local_accuracies):
+            num_features, local_f1_scores = zip(*sorted(zip(num_features,
+                                                            local_f1_scores),
+                                                reverse=True))
+            crop_num_features, crop_local_f1_scores = [], []
+            for x, y in zip(num_features, local_f1_scores):
                 if x <= start and x >= end:
                     crop_num_features.append(x)
-                    crop_local_accuracies.append(y)
+                    crop_local_f1_scores.append(y)
 
-            global_accuracies.append(crop_local_accuracies)
+            global_accuracies.append(crop_local_f1_scores)
 
     global_accuracies = np.array(global_accuracies)
     acc_mean = np.mean(global_accuracies, axis=0)
     acc_boundaries = np.linspace(acc_mean[0], acc_mean[-1], num_slices)
-    print("Mean accuracy\n", acc_mean)
+    print("Mean F1-score\n", acc_mean)
     print("Num Features\n", crop_num_features)
-    print("Slices Accuracy Boundaries\n", acc_boundaries)
+    print("Slices F1-score Boundaries\n", acc_boundaries)
 
     num_feat_boundaries = []
     for acc_b in acc_boundaries:
@@ -254,7 +259,7 @@ def get_feature_elimination_chart(directory: str, classifier: str,
     used_features = [int(f.split("/")[-1].split(".")[0].split("_")[3])
                      for f in filenames]
 
-    get_feature_elimination_plot(used_features, real, predicted, save)
+    get_feature_elimination_plot(used_features, real, predicted, "", save)
 
 
 def get_rfe_comparison_chart(directory: str, classifiers: list,
@@ -308,7 +313,7 @@ def get_accuracy_distribution(directory: str, features_slices: list,
 
         for file in files:
             _file = read_pickle(file)
-            name = file.split("_")[1:3]
+            name = file.split("_")[-3:]
             name[0] = methods_short_name[name[0]]
             name[1] = methods_short_name[name[1]]
             models.add(name[0])
@@ -335,7 +340,7 @@ def get_friedman_chart(directory: str, features_slices: list,
 
         for file in files:
             _file = read_pickle(file)
-            name = file.split("_")[1:3]
+            name = file.split("_")[-3:]
             _file["predicted"] = [np.around(x) for x in _file["predicted"]]
             name[1] = methods_short_name[name[1]]
             labels[name[1]].append(_file)
