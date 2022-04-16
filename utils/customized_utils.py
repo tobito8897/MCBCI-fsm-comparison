@@ -406,8 +406,8 @@ def get_jaccard_matrix_chb_vs_siena(chb_dir: str, siena_dir: str,
     plot_jaccard_matrix_chb_vs_siena(chb_slices, siena_slices, save)
 
 
-def execute_test_5x2_ftest(directory: str, classification_method: str,
-                           fsm1: str, fsm2: str, num_features: str):
+def execute_test_5x2_ftest_fsm(directory: str, classification_method: str,
+                               fsm1: str, fsm2: str, num_features: str):
     directory += "/Stats/"
     filenames = list_dir(directory)
     pattern1 = classification_method + "_" + fsm1 + "_" + num_features
@@ -421,3 +421,21 @@ def execute_test_5x2_ftest(directory: str, classification_method: str,
 
     test_5x2_ftest(fsm1["real"], [np.around(x) for x in fsm1["predicted"]],
                    fsm2["real"], [np.around(x) for x in fsm2["predicted"]])
+
+
+def execute_test_5x2_ftest_classifier(directory: str, fsm: str,
+                                      model1: str, model2: str,
+                                      num_features: str):
+    directory += "/Stats/"
+    filenames = list_dir(directory)
+    pattern1 = model1 + "_" + fsm + "_" + num_features
+    pattern2 = model2 + "_" + fsm + "_" + num_features
+
+    model1 = [x for x in filenames if pattern1 in x][0]
+    model2 = [x for x in filenames if pattern2 in x][0]
+
+    model1 = read_pickle(model1)
+    model2 = read_pickle(model2)
+
+    test_5x2_ftest(model1["real"], [np.around(x) for x in model1["predicted"]],
+                   model2["real"], [np.around(x) for x in model2["predicted"]])
