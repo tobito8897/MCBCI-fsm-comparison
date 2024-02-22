@@ -17,7 +17,7 @@ chb-mit:
   noictal_sample_step: 512
   ictal_sample_step: 256
   gain: 2.559375
-  units: 0.000001  # Microvots
+  units: 0.000001  # Microvolts
   part_for_grid: 0.10
   blacklisted_features: 
     "1": [35, 251, 159, 363, 135, 615, 647, 651, 298, 287,
@@ -87,7 +87,7 @@ siena:
   noictal_sample_step: 1024
   ictal_sample_step: 512
   gain: 1
-  units: 0.000001  # Microvots
+  units: 0.000001  # Microvolts
   blacklisted_features: 
     "1": [50, 155, 114, 10, 191, 199, 330, 35, 383, 403, 
           3, 267, 215, 186, 51, 67, 394, 250, 415, 7, 

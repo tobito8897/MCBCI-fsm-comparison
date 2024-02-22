@@ -1,5 +1,0 @@
-create_tree_dir.py
-download_edf_chb-mit.py
-collect_metadata_chb-mit.py
-delete_no_compliant_channels_chb-mit.py
-calculate_generic_windows_parameters_chb-mit.py
