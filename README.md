@@ -2,7 +2,7 @@
 
 ### Overview
 
-* This repository contains code used for the research [FSM comparison](hhttps://doi.org/10.3390/s22083066).
+* This repository contains code used for the research https://doi.org/10.3390/s22083066.
 * The configuration and metadata files are included too.
 * Datasets are not included.
 
@@ -35,15 +35,16 @@ Note: Some scripts require the user to provide arguments.
 
 ### Citing
 
-If you find this repository useful, please consider citing our work "Evaluation of Feature Selection Methods for Classification of Epileptic Seizure EEG Signals"
-
-        @article{sanchez2022evaluation,
-                 title={Evaluation of feature selection methods for classification of epileptic seizure EEG signals},
-                 author={Sánchez-Hernández, Sergio E and Salido-Ruiz, Ricardo A and Torres-Ramos, Sulema and  Román-Godínez, Israel},
-                 journal={Sensors},
-                 volume={22},
-                 number={8},
-                 year={2022},
-                 publisher={MDPI},
-                 doi={https://doi.org/10.3390/s22083066}
-        }
+If you find this repository useful, please consider citing our work.
+```
+@article{sanchez2022evaluation,
+                title={Evaluation of feature selection methods for classification of epileptic seizure EEG signals},
+                author={Sánchez-Hernández, Sergio E and Salido-Ruiz, Ricardo A and Torres-Ramos, Sulema and  Román-Godínez, Israel},
+                journal={Sensors},
+                volume={22},
+                number={8},
+                year={2022},
+                publisher={MDPI},
+                doi={https://doi.org/10.3390/s22083066}
+}
+```
